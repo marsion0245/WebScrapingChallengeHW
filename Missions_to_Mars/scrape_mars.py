@@ -7,6 +7,7 @@
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
+from datetime import datetime
 from time import sleep
 
 def get_browser():
@@ -16,6 +17,9 @@ def get_browser():
 
 def scrape_all():
 
+	# keep track of scraping date
+	scraped_date = datetime.now()
+	# each scraping creates its own browser object, intention is to run all tasks in separate threads (later ;-)
 	nasa_news = scrape_nasa()
 	jpl_featured_image = scrape_jpl()
 	mars_weather = scrape_mars_weather()
@@ -23,7 +27,8 @@ def scrape_all():
 	hemisphere_image_urls = scrape_hemisphere_image_urls()
 
 	return {
-		'nasa_news' : nasa_news, # get the most recent entry only
+		'scraped_date' : scraped_date, 
+		'nasa_news' : nasa_news,
 		'jpl_featured_image' : jpl_featured_image,
 		'mars_weather' : mars_weather,
 		'mars_facts' : mars_facts,
@@ -61,7 +66,8 @@ def scrape_nasa():
 	finally:
 		browser.quit()	
 	
-	return news_list
+	#return news_list
+	return news_list[0] # after confirmation from TA the app will show only firt entry from news
 	
 
 def scrape_jpl():
@@ -127,7 +133,7 @@ def scrape_mars_facts():
 	except:
 		print("Error during JPL scraping")
 		
-	return mars_facts_df
+	return mars_facts_df.values.tolist()
 
 
 def scrape_hemisphere_image_urls():
@@ -163,8 +169,7 @@ def scrape_hemisphere_image_urls():
 
 	return hemisphere_image_urls
 
-
-data_all = scrape_all()
-print(data_all)
-
+# Test run
+#data_all = scrape_all()
+#print(data_all)
 

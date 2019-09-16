@@ -5,26 +5,100 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="author" content="Martin Hrbac">
   <title>Mission Mars</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <style>
+	.jumbotron{
+		padding: 5px 5px 20px 5px;
+	}
+	#factsTbl td:first-child {
+		font-weight: bold
+	}
+	.pgfooter{
+		background-color: #eeeeee;
+	}
+	.timestamp{
+		font-size: 0.8em;
+		float:right;
+	}
+  </style>
 </head>
 
 <body>
-  <div class="container">
-	<div class="row text-center">
-		<div class="jumbotron" style="padding: 5px 5px 20px 5px">
-			<h1>Mission to Mars</h1>
-			<button type="button" class="btn btn-primary">Scrape New Data</button>
+	<div class="container">
+		<div class="row text-center">
+			<div class="jumbotron">
+				<h1><b>Mission to Mars</b></h1>
+				<a class="btn btn-primary" href="/scrape">Scrape New Data</a>
+				<time class="timestamp">{{marsdata['scraped_date']}}</time >
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12"
-			<h2>Latest Mars News</h2>
-		<div>
-	</div>
-	<div class="row">
-	</div>
-  </div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3><b>Latest Mars News</b></h3>
+				<h4>{{marsdata['nasa_news'].n_title}}</h4>
+				<div>{{marsdata['nasa_news'].n_teaser}}</div>
+			<div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<h3><b>Featured Mars Image</b></h3>
+				<img src="{{marsdata['jpl_featured_image']}}" class="img-thumbnail" alt="Featured Mars Image">
+			</div>
+			<div class="col-md-4">
+				<div class="img-thumbnail">
+					<h4><b>Current Weather on Mars</b></h4>
+					<div>{{marsdata['mars_weather']}}</div>
+				</div>
+				<h4><b>Mars Facts</b></h4>
+				<table id='factsTbl' border="1">
+				{% for row in marsdata['mars_facts'] %}
+					<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+				{% endfor %}
+				</table>
+			</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h3><b>Mars Hemispheres</b></h3>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="thumbnail">
+					<img src="{{marsdata['hemisphere_image_urls'][0].img_url}}" alt="Mars Hemispheres">
+					 <h4><b>{{marsdata['hemisphere_image_urls'][0].title}}</b></h4>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="thumbnail">
+					<img src="{{marsdata['hemisphere_image_urls'][1].img_url}}" alt="Mars Hemispheres">
+					 <h4><b>{{marsdata['hemisphere_image_urls'][1].title}}</b></h4>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="thumbnail">
+					<img src="{{marsdata['hemisphere_image_urls'][2].img_url}}" alt="Mars Hemispheres">
+					 <h4><b>{{marsdata['hemisphere_image_urls'][2].title}}</b></h4>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="thumbnail">
+					<img src="{{marsdata['hemisphere_image_urls'][3].img_url}}" alt="Mars Hemispheres">
+					 <h4><b>{{marsdata['hemisphere_image_urls'][3].title}}</b></h4>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center pgfooter">
+				<h5><b>Bootcamp Homework: Web Scraping Challenge</b></h5>
+			</div>	
+		</div>
+	 </div>
 </body>
-
 </html>
+
+
