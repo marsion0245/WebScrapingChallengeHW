@@ -50,3 +50,6 @@ Application refre
 
 Documents folder contain snaphots of front page: PageTop.png, PageBottom.png 
 
+![Front Page Top](Documents/PageTop.png)
+![Front Page Bottom](Documents/PageBottom.png)
+
